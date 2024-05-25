@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Purchase Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .content {
+            margin-top: 80px;
+        }
+        .product-list {
+            margin-bottom: 20px;
+        }
+        .product {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .product img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .product-info {
+            flex: 1;
+        }
+        .product-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .product-info p {
+            margin: 2px 0;
+            color: #888;
+        }
+        .product input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .order-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: 100%;
+        }
+        .submit-btn {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .total-amount {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 18px;
+            text-align: right;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mục mua sản phẩm</h1>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="product-list">
+                <div class="product">
+                    <img src="images/download.png" alt="Klairs Toner">
+                    <div class="product-info">
+                        <h3>Klairs Supple Preparation Unscented Toner</h3>
+                        <p>Quantity: 200ml</p>
+                        <p style="color: red;">$22.00</p>
+                    </div>
+                    <input type="number" id="klairs-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/download (1).png" alt="Eucerin Cleanser">
+                    <div class="product-info">
+                        <h3>Eucerin pH5 Sensitive Skin Facial Cleanser</h3>
+                        <p>Quantity: 400ml</p>
+                        <p style="color: red;">$18.00</p>
+                    </div>
+                    <input type="number" id="eucerin-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/download (2).png" alt="Simple Cleanser">
+                    <div class="product-info">
+                        <h3>Simple Kind to Skin Refreshing Facial Wash</h3>
+                        <p>Quantity: 150ml</p>
+                        <p style="color: red;">$15.00</p>
+                    </div>
+                    <input type="number" id="simple-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/wash.png" alt="Tara">
+                    <div class="product-info">
+                        <h3>Tara Moisturizing Cream Rejuvenate The Skin</h3>
+                        <p>Quantity: 200ml</p>
+                        <p style="color: red;">$45.00</p>
+                    </div>
+                    <input type="number" id="tara-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/wed-06.png" alt="Seimy">
+                    <div class="product-info">
+                        <h3>Seimy Revitalizing Serum</h3>
+                        <p>Quantity: 180ml</p>
+                        <p style="color: red;">$50.00</p>
+                    </div>
+                    <input type="number" id="seimy-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/0013632_sua-rua-mat-ponds-ngua-mun-100g_510.png" alt="Ponds">
+                    <div class="product-info">
+                        <h3>Ponds Age Miracle Night Cream</h3>
+                        <p>Quantity: 130ml</p>
+                        <p style="color: red;">$40.00</p>
+                    </div>
+                    <input type="number" id="ponds-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/srm-oribe-facial-cleanser-50g-hinh-2.png" alt="Oribe">
+                    <div class="product-info">
+                        <h3>Oribe Gold Lust Repair & Restore Shampoo</h3>
+                        <p>Quantity: 190ml</p>
+                        <p style="color: red;">$34.00</p>
+                    </div>
+                    <input type="number" id="oribe-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+                <div class="product">
+                    <img src="images/download (3).png" alt="Cerave Cleanser">
+                    <div class="product-info">
+                        <h3>Cerave Hydrating Facial Cleanser</h3>
+                        <p>Quantity: 355ml</p>
+                        <p style="color: red;">$20.00</p>
+                    </div>
+                    <input type="number" id="cerave-quantity" min="0" value="0" onchange="calculateTotal()">
+                </div>
+            </div>
+            <form class="order-form">
+                <h2>Đơn đặt hàng của bạn</h2>
+                <div class="form-group">
+                    <label for="name">Họ và tên:</label>
+                    <input type="text" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ nhận hàng:</label>
+                    <input type="text" id="address">
+                </div>
+                <div class="form-group">
+                    <label for="payment-method">Phương thức thanh toán:</label>
+                    <select id="payment-method">
+                        <option value="Tiền mặt">Tiền mặt</option>
+                        <option value="Thẻ tín dụng">Thẻ tín dụng</option>
+                        <option value="Momo">Momo</option>
+                    </select>
+                </div>
+                <div class="total-amount" id="total-amount">Tổng cộng giá tiền: $0.00</div>
+                <button type="button" class="submit-btn" onclick="submitOrder()">Đặt hàng</button>
+            </form>
+        </div>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+    <script>
+        const prices = {
+            klairs: 22.00,
+            eucerin: 18.00,
+            simple: 15.00,
+            tara: 45.00,
+            seimy: 50.00,
+            ponds: 40.00,
+            oribe: 34.00,
+            cerave: 20.00
+        };
+
+        function calculateTotal() {
+            const klairsQuantity = parseInt(document.getElementById('klairs-quantity').value) || 0;
+            const eucerinQuantity = parseInt(document.getElementById('eucerin-quantity').value) || 0;
+            const simpleQuantity = parseInt(document.getElementById('simple-quantity').value) || 0;
+            const taraQuantity = parseInt(document.getElementById('tara-quantity').value) || 0;
+            const seimyQuantity = parseInt(document.getElementById('seimy-quantity').value) || 0;
+            const pondsQuantity = parseInt(document.getElementById('ponds-quantity').value) || 0;
+            const oribeQuantity = parseInt(document.getElementById('oribe-quantity').value) || 0;
+            const ceraveQuantity = parseInt(document.getElementById('cerave-quantity').value) || 0;
+
+            const total = (klairsQuantity * prices.klairs) +
+                          (eucerinQuantity * prices.eucerin) +
+                          (simpleQuantity * prices.simple) +
+                          (taraQuantity * prices.tara) +
+                          (seimyQuantity * prices.seimy) +
+                          (pondsQuantity * prices.ponds) +
+                          (oribeQuantity * prices.oribe) +
+                          (ceraveQuantity * prices.cerave);
+
+            document.getElementById('total-amount').innerText = `Tổng cộng giá tiền: $${total.toFixed(2)}`;
+        }
+
+        function submitOrder() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const klairsQuantity = parseInt(document.getElementById('klairs-quantity').value) || 0;
+            const eucerinQuantity = parseInt(document.getElementById('eucerin-quantity').value) || 0;
+            const simpleQuantity = parseInt(document.getElementById('simple-quantity').value) || 0;
+            const taraQuantity = parseInt(document.getElementById('tara-quantity').value) || 0;
+            const seimyQuantity = parseInt(document.getElementById('seimy-quantity').value) || 0;
+            const pondsQuantity = parseInt(document.getElementById('ponds-quantity').value) || 0;
+            const oribeQuantity = parseInt(document.getElementById('oribe-quantity').value) || 0;
+            const ceraveQuantity = parseInt(document.getElementById('cerave-quantity').value) || 0;
+
+            if (name && email && address && paymentMethod) {
+                const totalAmount = (klairsQuantity * prices.klairs) +
+                                    (eucerinQuantity * prices.eucerin) +
+                                    (simpleQuantity * prices.simple) +
+                                    (taraQuantity * prices.tara) +
+                                    (seimyQuantity * prices.seimy) +
+                                    (pondsQuantity * prices.ponds) +
+                                    (oribeQuantity * prices.oribe) +
+                                    (ceraveQuantity * prices.cerave);
+                showModal(`Xác nhận đơn hàng thành công!\n\nHọ và tên: ${name}\nEmail: ${email}\nĐịa chỉ nhận hàng: ${address}\nPhương thức thanh toán: ${paymentMethod}\nTổng cộng giá tiền: $${totalAmount.toFixed(2)}`);
+            } else {
+                showModal('Hãy điền đầy đủ vào form.');
+            }
+        }
+
+        function showModal(message) {
+            const modal = document.getElementById('myModal');
+            const modalMessage = document.getElementById('modal-message');
+            modalMessage.innerText = message;
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
